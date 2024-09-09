@@ -1,5 +1,5 @@
 ﻿using eShopSolution.Application.Catelog.Products.Dtos;
-using eShopSolution.Application.Catelog.Products.Dtos.Manage;
+using eShopSolution.Application.Catelog.Products.Dtos.Public;
 using eShopSolution.Application.Dtos;
 using System;
 using System.Collections.Generic;

@@ -65,5 +65,7 @@ namespace eShopSolution.Application.Catelog.Products
             };
             return pageResult;
         }
+
+
     }
 }
