@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Principal;
 using System.Text;
 
-namespace eShopSolution.Application.Dtos
+namespace eShopSolution.ViewModels.Catelog.Common
 {
     public class PagingRequestBase
     {
