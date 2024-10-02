@@ -1,9 +1,6 @@
-﻿using eShopSolution.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace eShopSolution.Application.Catelog.Products.Dtos.Manage
+namespace eShopSolution.ViewModels.Catelog.Product
 {
     public class ProductUpdateRequest
     {
@@ -15,6 +12,7 @@ namespace eShopSolution.Application.Catelog.Products.Dtos.Manage
         public string SeoTitle { set; get; }
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
+        public IFormFile ThumbnailImage { set; get; }
 
     }
 }
