@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eShopSolution.ViewModels.Catelog.Product
+namespace eShopSolution.ViewModels.Catelog.ProductImage
 {
     public class ProductImageViewModel
     {
