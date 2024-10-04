@@ -85,7 +85,7 @@ namespace eShopSolution.Data.Extention
                 new Product()
                 {
                     Id = 1,
-                    DateCreate = DateTime.Now,
+                    DateCreated = DateTime.Now,
                     OriginalPrice = 100000,
                     Price = 200000,
                     Stock = 0,
