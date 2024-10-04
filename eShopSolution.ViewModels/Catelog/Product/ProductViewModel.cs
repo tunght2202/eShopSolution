@@ -11,7 +11,7 @@ namespace eShopSolution.Application.Catelog.Products.Dtos
         public decimal OriginalPrice { get; set; }
         public int Stock { get; set; }
         public int ViewCount { get; set; }
-        public DateTime DateCreate { get; set; }
+        public DateTime DateCreated { get; set; }
         public string Name { set; get; }
         public string Description { set; get; }
         public string Details { set; get; }

@@ -1,4 +1,4 @@
-﻿using eShopSolution.ViewModels.Catelog.Common;
+﻿using eShopSolution.ViewModels.Common;
 
 namespace eShopSolution.ViewModels.Catelog.Product
 {
