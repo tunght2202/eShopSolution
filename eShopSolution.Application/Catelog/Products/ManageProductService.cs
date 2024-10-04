@@ -49,7 +49,7 @@ namespace eShopSolution.Application.Catelog.Products
                 OriginalPrice = request.OriginalPrice,
                 Stock = request.Stock,
                 ViewCount = 0,
-                DateCreate = DateTime.Now,
+                DateCreated = DateTime.Now,
                 ProductTranslations = new List<ProductTranslation>()
                 {
                     new ProductTranslation()
@@ -72,7 +72,7 @@ namespace eShopSolution.Application.Catelog.Products
                     new ProductImage()
                     {
                         Caption = "Thumbnail image",
-                        DateCreate = DateTime.Now,
+                        DateCreated = DateTime.Now,
                         FileSize = request.ThumbnailImage.Length,
                         ImagePath = await this.SaveFile(request.ThumbnailImage),
                         IsDefault = true,
@@ -127,7 +127,7 @@ namespace eShopSolution.Application.Catelog.Products
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
-                    DateCreate = x.p.DateCreate,
+                    DateCreated = x.p.DateCreated,
                     Description = x.pt.Description,
                     Details = x.pt.Details,
                     LanguageId = x.pt.LanguageId,
@@ -156,7 +156,7 @@ namespace eShopSolution.Application.Catelog.Products
                 .Select(i => new ProductImageViewModel()
                 {
                     Caption = i.Caption,
-                    DateCreated = i.DateCreate,
+                    DateCreated = i.DateCreated,
                     FileSize = i.FileSize,
                     Id = i.Id,
                     ImagePath = i.ImagePath,

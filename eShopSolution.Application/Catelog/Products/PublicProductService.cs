@@ -32,7 +32,7 @@ namespace eShopSolution.Application.Catelog.Products
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
-                    DateCreate = x.p.DateCreate,
+                    DateCreated = x.p.DateCreated,
                     Description = x.pt.Description,
                     Details = x.pt.Details,
                     LanguageId = x.pt.LanguageId,
@@ -72,7 +72,7 @@ namespace eShopSolution.Application.Catelog.Products
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
-                    DateCreate = x.p.DateCreate,
+                    DateCreated = x.p.DateCreated,
                     Description = x.pt.Description,
                     Details = x.pt.Details,
                     LanguageId = x.pt.LanguageId,
