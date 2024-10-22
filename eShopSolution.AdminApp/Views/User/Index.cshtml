@@ -1,5 +1,6 @@
-﻿@using eShopSolution.ViewModels.Common;
+﻿﻿@using eShopSolution.ViewModels.Common;
 @model PagedResult<eShopSolution.ViewModels.System.Users.UserVm>
+
 
 @{
     ViewData["Title"] = "Index";
@@ -23,9 +24,6 @@
                     <thead>
                         <tr>
                             <th>
-                                Id
-                            </th>
-                            <th>
                                 Tên
                             </th>
                             <th>
@@ -48,9 +46,6 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Id)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.FirstName)
                                 </td>
                                 <td>
@@ -66,14 +61,15 @@
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
+        @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>

@@ -44,13 +44,13 @@ namespace eShopSolution.AdminApp.Controllers
                 return View(ModelState);
             }
             var token = await _userApiClient.Authenticate(request);
-            var userPrincipal = this.ValidateToken(token);//ClaimsPrincipal đại diện cho người dùng hiện tại của hệ thống (user)
+            var userPrincipal = this.ValidateToken(token.ResultObj);//ClaimsPrincipal đại diện cho người dùng hiện tại của hệ thống (user)
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = true, // ghi nhớ cookies
             };
-            HttpContext.Session.SetString("Token", token);
+            HttpContext.Session.SetString("Token", token.ResultObj);
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
