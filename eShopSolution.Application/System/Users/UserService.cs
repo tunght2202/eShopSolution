@@ -3,6 +3,7 @@ using eShopSolution.Data.Entities;
 using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -89,7 +90,9 @@ namespace eShopSolution.Application.System.Users
                 //4. Select and projection
                 var pagedResult = new PagedResult<UserVm>()
                 {
-                    TotalRecord = totalRow,
+                    TotalRecords = totalRow,
+                    PageIndex = request.PageIndex,
+                    PageSize = request.PageSize,
                     Items = data
                 };
             return new ApiSuccessResult<PagedResult<UserVm>>(pagedResult);
@@ -138,7 +141,8 @@ namespace eShopSolution.Application.System.Users
                 FirstName = user.FirstName,
                 Dob = user.Dob,
                 Id = user.Id,
-                LastName = user.LastName
+                LastName = user.LastName,
+                UserName = user.UserName
             };
             return new ApiSuccessResult<UserVm>(userVm);
         }
@@ -155,7 +159,6 @@ namespace eShopSolution.Application.System.Users
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
-
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
