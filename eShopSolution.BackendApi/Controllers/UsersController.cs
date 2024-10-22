@@ -50,7 +50,7 @@ namespace eShopSolution.BackendApi.Controllers
             {
                 return BadRequest(result);
             }
-            return Ok();
+            return Ok(result);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
@@ -79,6 +79,13 @@ namespace eShopSolution.BackendApi.Controllers
         {
             var user = await _userService.GetById(id);
             return Ok(user);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _userService.Delete(id);
+            return Ok(result);
         }
     }
 }
