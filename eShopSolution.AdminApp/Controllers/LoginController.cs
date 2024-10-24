@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using eShopSolution.AdminApp.Services;
 using Microsoft.Extensions.Configuration;
+using eShopSolution.Utilities.Constants;
 
 namespace eShopSolution.AdminApp.Controllers
 {
@@ -55,7 +56,8 @@ namespace eShopSolution.AdminApp.Controllers
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = true, // ghi nhớ cookies
             };
-            HttpContext.Session.SetString("Token", token.ResultObj);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, token.ResultObj);
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
