@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eShopSolution.Application.Catelog.Products.Dtos
+namespace eShopSolution.ViewModels.Catelog.Product
 {
-    public class ProductViewModel
+    public class ProductVm
     {
         public int Id { get; set; }
         public decimal Price { get; set; }
