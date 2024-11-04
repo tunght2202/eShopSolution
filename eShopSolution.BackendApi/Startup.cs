@@ -1,3 +1,4 @@
+using eShopSolution.Application.Catelog.Categories;
 using eShopSolution.Application.Catelog.Products;
 using eShopSolution.Application.Common;
 using eShopSolution.Application.System.Languages;
@@ -48,6 +49,7 @@ namespace eShopSolution.BackendApi
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<ICategoryService, CategoryService>();
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
             services.AddSwaggerGen(c =>
             {
