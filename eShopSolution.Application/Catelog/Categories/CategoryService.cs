@@ -1,8 +1,5 @@
-﻿using eShopSolution.Data.Entities;
-using eShopSolution.ViewModels.Catelog.Categories;
-using System;
+﻿using eShopSolution.ViewModels.Catelog.Categories;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace eShopSolution.Application.Catelog.Categories
