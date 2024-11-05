@@ -60,7 +60,6 @@ namespace eShopSolution.AdminApp.Services
             requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
             requestContent.Add(new StringContent(request.Name.ToString()), "name");
             requestContent.Add(new StringContent(request.Description.ToString()), "description");
-
             requestContent.Add(new StringContent(request.Details.ToString()), "details");
             requestContent.Add(new StringContent(request.SeoDescription.ToString()), "seoDescription");
             requestContent.Add(new StringContent(request.SeoTitle.ToString()), "seoTitle");
