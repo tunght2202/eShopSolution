@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntegration
 {
     public class RoleApiClient : IRoleApiClient
     {

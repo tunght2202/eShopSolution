@@ -3,7 +3,7 @@ using eShopSolution.ViewModels.Common;
 using System.Threading.Tasks;
 using System;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntegration
 {
     public interface IUserApiClient
     {
