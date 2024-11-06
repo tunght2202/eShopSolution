@@ -2,10 +2,12 @@
 using eShopSolution.Utilities.Constants;
 using eShopSolution.ViewModels.Catelog.Product;
 using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -126,5 +128,78 @@ namespace eShopSolution.AdminApp.Controllers
             }
             return categoryAssignRequest;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id, string languageId)
+        {
+            var result = await _productApiClient.GetById(id, languageId);
+            if (result != null)
+            {
+                var product = result;
+                var updateRequest = new ProductUpdateRequest()
+                {
+                    Id = id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Details = product.Details,
+                    SeoAlias = product.SeoAlias,
+                    SeoDescription = product.SeoDescription,
+                    SeoTitle = product.SeoTitle
+                    
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(UserUpdateRequest request)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View();
+
+        //    var result = await _userApiClient.UpdateUser(request.Id, request);
+        //    if (result.IsSuccessed)
+        //    {
+        //        TempData["result"] = "success";
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(request);
+        //}
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id, string languageId = "vi")
+        {
+            var result = await _productApiClient.GetById(id, languageId);
+            return View(result);
+        }
+
+        //[HttpGet]
+        //public IActionResult Delete(Guid id)
+        //{
+        //    return View(new UserDeleteRequest()
+        //    {
+        //        Id = id
+        //    });
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> Delete(UserDeleteRequest request)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View();
+
+        //    var result = await _userApiClient.Delete(request.Id);
+        //    if (result.IsSuccessed)
+        //    {
+        //        TempData["result"] = "success";
+        //        return RedirectToAction("Index");
+        //    }
+
+
+        //    ModelState.AddModelError("", result.Message);
+        //    return View(request);
+        //}
     }
 }

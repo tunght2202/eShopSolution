@@ -1,16 +1,17 @@
-﻿@model eShopSolution.ViewModels.Catelog.Product.ProductCreateRequest
+﻿@model eShopSolution.ViewModels.Catelog.Product.ProductUpdateRequest
 
 @{
-    ViewData["Title"] = "Tạo mới sản phẩm";
+    ViewData["Title"] = "Chỉnh sửa sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Thêm người dùng</h1>
+    <h1 class="mt-4">Chỉnh sửa sản phẩm</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Dashboard</a></li>
-        <li class="breadcrumb-item active">Thêm sản phẩm</li>
+        <li class="breadcrumb-item"><a asp-action="" asp-controller="Home">Dashboard</a></li>
+        <li class="breadcrumb-item active">Chỉnh sửa sản phẩm</li>
     </ol>
     <div class="card mb-4">
         <div class="card-header">
@@ -20,14 +21,15 @@
         </div>
         <div class="card-body">
             <div class="col-md-4">
-                <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" type="hidden" />
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    @* <div class="form-group">
                         <label asp-for="Price" class="control-label"></label>
                         <input asp-for="Price" type="number" class="form-control" />
                         <span asp-validation-for="Price" class="text-danger"></span>
@@ -73,7 +75,7 @@
                         <input asp-for="ThumbnailImage" type="file" class="form-control" />
                         <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+ *@                    <div class="form-group">
                         <input type="submit" value="Tạo mới" class="btn btn-primary" />
                     </div>
                 </form>
@@ -85,4 +87,4 @@
 
 
 
-        
+

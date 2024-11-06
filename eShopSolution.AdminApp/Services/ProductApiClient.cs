@@ -106,5 +106,15 @@ namespace eShopSolution.AdminApp.Services
 
             return data;
         }
+
+        public Task<ApiResult<bool>> Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ApiResult<bool>> UpdateProduct(int id, ProductUpdateRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
