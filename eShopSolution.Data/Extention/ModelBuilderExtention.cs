@@ -1,4 +1,5 @@
 ﻿using eShopSolution.Data.Entities;
+using eShopSolution.Data.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ namespace eShopSolution.Data.Extention
 {
     public static class ModelBuilderExtention
     {
-        public static void Seed( this ModelBuilder modelBuilder)
+        public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AppConfig>().HasData(
                 new AppConfig() { Key = "HomeTitle", Value = "This is homepage of eShopSolution" },
@@ -23,7 +24,7 @@ namespace eShopSolution.Data.Extention
                 );
             modelBuilder.Entity<Category>().HasData(
                 new Category()
-                {   
+                {
                     Id = 1,
                     IsShowOnHome = true,
                     ParentId = null,
@@ -51,15 +52,15 @@ namespace eShopSolution.Data.Extention
                      SeoTitle = "Sản phẩm thời trang nam"
                  },
                  new CategoryTranslation()
-                    {
-                        Id = 2,
-                        CategoryId = 1,
-                        Name = "Men Shirt",
-                        LanguageId = "en",
-                        SeoAlias = "men-shirt",
-                        SeoDescription = "The shirt product for men",
-                        SeoTitle = "The shirt product for men"
-                    },
+                 {
+                     Id = 2,
+                     CategoryId = 1,
+                     Name = "Men Shirt",
+                     LanguageId = "en",
+                     SeoAlias = "men-shirt",
+                     SeoDescription = "The shirt product for men",
+                     SeoTitle = "The shirt product for men"
+                 },
                  new CategoryTranslation()
                  {
                      Id = 3,
@@ -154,6 +155,15 @@ namespace eShopSolution.Data.Extention
                 RoleId = roleId,
                 UserId = adminId
             });
+
+            modelBuilder.Entity<Slide>().HasData(
+  new Slide() { Id = 1, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 1, Url = "#", Image = "/themes/images/carousel/1.png", Status = Status.Active },
+  new Slide() { Id = 2, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 2, Url = "#", Image = "/themes/images/carousel/2.png", Status = Status.Active },
+  new Slide() { Id = 3, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 3, Url = "#", Image = "/themes/images/carousel/3.png", Status = Status.Active },
+  new Slide() { Id = 4, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 4, Url = "#", Image = "/themes/images/carousel/4.png", Status = Status.Active },
+  new Slide() { Id = 5, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 5, Url = "#", Image = "/themes/images/carousel/5.png", Status = Status.Active },
+  new Slide() { Id = 6, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 6, Url = "#", Image = "/themes/images/carousel/6.png", Status = Status.Active }
+  );
         }
     }
 }

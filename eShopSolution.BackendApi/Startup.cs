@@ -4,6 +4,7 @@ using eShopSolution.Application.Common;
 using eShopSolution.Application.System.Languages;
 using eShopSolution.Application.System.Roles;
 using eShopSolution.Application.System.Users;
+using eShopSolution.Application.Utilities.Slides;
 using eShopSolution.BackendApi.Constants;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
@@ -50,6 +51,7 @@ namespace eShopSolution.BackendApi
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ISlideService, SlideService>();
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
             services.AddSwaggerGen(c =>
             {

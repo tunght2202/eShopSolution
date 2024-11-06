@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.WebApp
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient
     {
@@ -107,14 +108,10 @@ namespace eShopSolution.AdminApp.Services
             return data;
         }
 
-        public Task<ApiResult<bool>> Delete(Guid id)
+        public async Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<bool>> UpdateProduct(int id, ProductUpdateRequest request)
-        {
-            throw new NotImplementedException();
+            var data = await GetListAsync<ProductVm>($"/api/products/featured/{languageId}/{take}");
+            return data;
         }
     }
 }

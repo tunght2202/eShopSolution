@@ -1,10 +1,9 @@
 ﻿using eShopSolution.ViewModels.Catelog.Product;
 using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.Users;
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.WebApp
 {
     public interface IProductApiClient
     {
@@ -15,9 +14,7 @@ namespace eShopSolution.AdminApp.Services
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
 
         Task<ProductVm> GetById(int id, string languageId);
-
-        Task<ApiResult<bool>> Delete(Guid id);
-        Task<ApiResult<bool>> UpdateProduct(int id, ProductUpdateRequest request);
+        Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take);
 
     }
 }
