@@ -1,9 +1,14 @@
 ﻿using eShopSolution.AdminApp.Services;
 using eShopSolution.Utilities.Constants;
 using eShopSolution.ViewModels.Catelog.Product;
+using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Controllers
@@ -12,15 +17,19 @@ namespace eShopSolution.AdminApp.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IConfiguration _configuration;
+        private readonly ICategoryApiClient _categoryApiClient;
+
 
         public ProductController(IProductApiClient productApiClient,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ICategoryApiClient categoryApiClient)
         {
             _configuration = configuration;
             _productApiClient = productApiClient;
+            _categoryApiClient = categoryApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 10)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
@@ -29,10 +38,20 @@ namespace eShopSolution.AdminApp.Controllers
                 Keyword = keyword,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                LanguageId = languageId
+                LanguageId = languageId,
+                CategoryId = categoryId
             };
             var data = await _productApiClient.GetPagings(request);
             ViewBag.Keyword = keyword;
+
+            var categories = await _categoryApiClient.GetAll(languageId);
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = categoryId.HasValue && categoryId.Value == x.Id
+            });
+
             if (TempData["result"] != null)
             {
                 ViewBag.SuccessMsg = TempData["result"];
@@ -63,5 +82,124 @@ namespace eShopSolution.AdminApp.Controllers
             ModelState.AddModelError("", "Thêm sản phẩm thất bại");
             return View(request);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CategoryAssign(int id)
+        {
+            var roleAssignRequest = await GetCategoryAssignRequest(id);
+            return View(roleAssignRequest);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _productApiClient.CategoryAssign(request.Id, request);
+
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Cập nhật danh mục thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            var roleAssignRequest = await GetCategoryAssignRequest(request.Id);
+
+            return View(roleAssignRequest);
+        }
+
+        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var productObj = await _productApiClient.GetById(id, languageId);
+            var categories = await _categoryApiClient.GetAll(languageId);
+            var categoryAssignRequest = new CategoryAssignRequest();
+            foreach (var role in categories)
+            {
+                categoryAssignRequest.Categories.Add(new SelectItem()
+                {
+                    Id = role.Id.ToString(),
+                    Name = role.Name,
+                    Selected = productObj.Categories.Contains(role.Name)
+                });
+            }
+            return categoryAssignRequest;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id, string languageId)
+        {
+            var result = await _productApiClient.GetById(id, languageId);
+            if (result != null)
+            {
+                var product = result;
+                var updateRequest = new ProductUpdateRequest()
+                {
+                    Id = id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Details = product.Details,
+                    SeoAlias = product.SeoAlias,
+                    SeoDescription = product.SeoDescription,
+                    SeoTitle = product.SeoTitle
+                    
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(UserUpdateRequest request)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View();
+
+        //    var result = await _userApiClient.UpdateUser(request.Id, request);
+        //    if (result.IsSuccessed)
+        //    {
+        //        TempData["result"] = "success";
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(request);
+        //}
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id, string languageId = "vi")
+        {
+            var result = await _productApiClient.GetById(id, languageId);
+            return View(result);
+        }
+
+        //[HttpGet]
+        //public IActionResult Delete(Guid id)
+        //{
+        //    return View(new UserDeleteRequest()
+        //    {
+        //        Id = id
+        //    });
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> Delete(UserDeleteRequest request)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View();
+
+        //    var result = await _userApiClient.Delete(request.Id);
+        //    if (result.IsSuccessed)
+        //    {
+        //        TempData["result"] = "success";
+        //        return RedirectToAction("Index");
+        //    }
+
+
+        //    ModelState.AddModelError("", result.Message);
+        //    return View(request);
+        //}
     }
 }
