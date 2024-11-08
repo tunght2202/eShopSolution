@@ -116,5 +116,10 @@ namespace eShopSolution.AdminApp.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<bool> DeleteProduct(int id)
+        {
+            return await Delete($"/api/products/" + id);
+        }
     }
 }

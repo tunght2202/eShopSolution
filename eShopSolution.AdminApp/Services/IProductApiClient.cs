@@ -18,6 +18,6 @@ namespace eShopSolution.AdminApp.Services
 
         Task<ApiResult<bool>> Delete(Guid id);
         Task<ApiResult<bool>> UpdateProduct(int id, ProductUpdateRequest request);
-
+        Task<bool> DeleteProduct(int id);
     }
 }
