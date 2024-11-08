@@ -140,13 +140,13 @@ namespace eShopSolution.Data.Extention
                 Id = adminId,
                 UserName = "admin",
                 NormalizedUserName = "admin",
-                Email = "tedu.international@gmail.com",
-                NormalizedEmail = "tedu.international@gmail.com",
+                Email = "tunghthe160895@gmail.com",
+                NormalizedEmail = "tunghthe160895@gmail.com",
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "Abcd1234$"),
                 SecurityStamp = string.Empty,
-                FirstName = "Toan",
-                LastName = "Bach",
+                FirstName = "Thanh",
+                LastName = "Tung",
                 Dob = new DateTime(2020, 01, 31)
             });
 
