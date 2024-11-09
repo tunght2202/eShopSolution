@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section scripts {
+@section scripts{
     <script src="~/js/cart.js"></script>
     <script>
         var cartController = new CartController();
@@ -23,7 +23,7 @@
 
 <hr class="soft" />
 
-<table class="table table-bordered">
+<table class="table table-bordered" id="tbl_cart">
     <thead>
         <tr>
             <th>Product</th>
