@@ -130,76 +130,73 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id, string languageId)
-        {
-            var result = await _productApiClient.GetById(id, languageId);
-            if (result != null)
-            {
-                var product = result;
-                var updateRequest = new ProductUpdateRequest()
-                {
-                    Id = id,
-                    Name = product.Name,
-                    Description = product.Description,
-                    Details = product.Details,
-                    SeoAlias = product.SeoAlias,
-                    SeoDescription = product.SeoDescription,
-                    SeoTitle = product.SeoTitle
-                    
-                };
-                return View(updateRequest);
-            }
-            return RedirectToAction("Error", "Home");
-        }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(UserUpdateRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View();
-
-        //    var result = await _userApiClient.UpdateUser(request.Id, request);
-        //    if (result.IsSuccessed)
-        //    {
-        //        TempData["result"] = "success";
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(request);
-        //}
-
-        [HttpGet]
         public async Task<IActionResult> Details(int id, string languageId = "vi")
         {
             var result = await _productApiClient.GetById(id, languageId);
             return View(result);
         }
 
-        //[HttpGet]
-        //public IActionResult Delete(Guid id)
-        //{
-        //    return View(new UserDeleteRequest()
-        //    {
-        //        Id = id
-        //    });
-        //}
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new ProductDeleteRequest()
+            {
+                Id = id
+            });
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Delete(UserDeleteRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View();
+        [HttpPost]
+        public async Task<IActionResult> Delete(ProductDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
 
-        //    var result = await _userApiClient.Delete(request.Id);
-        //    if (result.IsSuccessed)
-        //    {
-        //        TempData["result"] = "success";
-        //        return RedirectToAction("Index");
-        //    }
+            var result = await _productApiClient.DeleteProduct(request.Id);
+            if (result)
+            {
+                TempData["result"] = "Xóa sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
 
+            ModelState.AddModelError("", "Xóa không thành công");
+            return View(request);
+        }
 
-        //    ModelState.AddModelError("", result.Message);
-        //    return View(request);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var product = await _productApiClient.GetById(id, languageId);
+            var editVm = new ProductUpdateRequest()
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Details = product.Details,
+                Name = product.Name,
+                SeoAlias = product.SeoAlias,
+                SeoDescription = product.SeoDescription,
+                SeoTitle = product.SeoTitle
+            };
+            return View(editVm);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit([FromForm] ProductUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _productApiClient.UpdateProduct(request);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Cập nhật sản phẩm thất bại");
+            return View(request);
+        }
     }
 }
