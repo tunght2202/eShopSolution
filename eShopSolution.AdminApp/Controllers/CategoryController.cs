@@ -38,5 +38,34 @@ namespace eShopSolution.AdminApp.Controllers
             }
             return View(data);
         }
+
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm] CategoryCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+            request.IsShowOnHome = true;
+            request.LanguageId = "vi";
+            request.Status = Data.Enums.Status.Active;
+            request.SortOrder = 0;
+            var result = await _categoryApiClient.CreateCategory(request);
+            if (result)
+            {
+                TempData["result"] = "Thêm mới danh mục thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Thêm danh mục thất bại");
+            return View(request);
+        }
+
     }
 }

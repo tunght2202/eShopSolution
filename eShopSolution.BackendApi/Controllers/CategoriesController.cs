@@ -55,5 +55,7 @@ namespace eShopSolution.BackendApi.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = categoryId }, category);
         }
+
+
     }
 }

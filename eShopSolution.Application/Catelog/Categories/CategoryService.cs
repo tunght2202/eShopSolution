@@ -109,5 +109,7 @@ namespace eShopSolution.Application.Catelog.Categories
                 ParentId = x.c.ParentId
             }).FirstOrDefaultAsync();
         }
+
+
     }
 }

@@ -10,6 +10,7 @@ namespace eShopSolution.AdminApp.Services
     {
         Task<List<CategoryVm>> GetAll(string languageId);
         Task<PagedResult<CategoryPageVm>> GetPagings(GetManageCategoryPagingRequest request);
+        Task<bool> CreateCategory(CategoryCreateRequest request);
 
     }
 }
