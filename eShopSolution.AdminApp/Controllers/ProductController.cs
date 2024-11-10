@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,12 +46,15 @@ namespace eShopSolution.AdminApp.Controllers
             ViewBag.Keyword = keyword;
 
             var categories = await _categoryApiClient.GetAll(languageId);
-            ViewBag.Categories = categories.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString(),
-                Selected = categoryId.HasValue && categoryId.Value == x.Id
-            });
+            ViewBag.Categories = new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "--Danh sách phân loại trống--", Value = "-1", Selected = categoryId == -1 }
+                    }.Concat(categories.Select(x => new SelectListItem
+                    {
+                        Text = x.Name,
+                        Value = x.Id.ToString(),
+                        Selected = categoryId.HasValue && categoryId.Value == x.Id
+                    }));
 
             if (TempData["result"] != null)
             {
