@@ -9,6 +9,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.Catelog.Product;
+using eShopSolution.Application.Common;
+using eShopSolution.Utilities.Exceptions;
 
 namespace eShopSolution.Application.Catelog.Categories
 {
@@ -112,6 +114,15 @@ namespace eShopSolution.Application.Catelog.Categories
             }).FirstOrDefaultAsync();
         }
 
+        public async Task<int> Delete(int categoryId)
+        {
+            var category = await _context.Categories.FindAsync(categoryId);
+            if (category == null) throw new EShopException($"Cannot find a category: {categoryId}");
 
+
+            _context.Categories.Remove(category);
+
+            return await _context.SaveChangesAsync();
+        }
     }
 }

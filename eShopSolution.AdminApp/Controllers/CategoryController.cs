@@ -73,5 +73,32 @@ namespace eShopSolution.AdminApp.Controllers
             var result = await _categoryApiClient.GetById(id, languageId);
             return View(result);
         }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new CategoryDeleteRequest()
+            {
+                id = id
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(CategoryDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _categoryApiClient.DeleteCategory(request.id);
+            if (result)
+            {
+                TempData["result"] = "Xóa danh mục thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Xóa không thành công");
+            return View(request);
+        }
+
     }
 }

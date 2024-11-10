@@ -81,5 +81,10 @@ namespace eShopSolution.AdminApp.Services
 
             return data;
         }
+
+        public async Task<bool> DeleteCategory(int id)
+        {
+            return await Delete($"/api/Categories/" + id);
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace eShopSolution.AdminApp.Services
         Task<PagedResult<CategoryPageVm>> GetPagings(GetManageCategoryPagingRequest request);
         Task<bool> CreateCategory(CategoryCreateRequest request);
         Task<CategoryPageVm> GetById(int id, string languageId);
+        Task<bool> DeleteCategory(int id);
     }
 }

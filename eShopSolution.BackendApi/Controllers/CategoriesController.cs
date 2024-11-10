@@ -56,6 +56,13 @@ namespace eShopSolution.BackendApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = categoryId }, category);
         }
 
-
+        [HttpDelete("{categoryId}")]
+        public async Task<IActionResult> Delete(int categoryId)
+        {
+            var affectedResult = await _categoryService.Delete(categoryId);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
     }
 }
