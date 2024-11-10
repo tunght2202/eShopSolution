@@ -13,5 +13,6 @@ namespace eShopSolution.Application.Catelog.Categories
         Task<PagedResult<CategoryPageVm>> GetAllPaging(GetManageCategoryPagingRequest request);
         Task<int> Create(CategoryCreateRequest request);
         Task<int> Delete(int categoryId);
+        Task<int> Update(CategoryUpdateRequest request);
     }
 }

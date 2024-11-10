@@ -81,6 +81,7 @@ namespace eShopSolution.Application.Catelog.Categories
                 .Select(x => new CategoryPageVm()
                 {
                     Id = x.c.Id,
+                    SortOrder = x.c.SortOrder,
                     Name = x.ct.Name,
                     SeoAlias = x.ct.SeoAlias,
                     SeoDescription = x.ct.SeoDescription,
@@ -121,6 +122,23 @@ namespace eShopSolution.Application.Catelog.Categories
 
 
             _context.Categories.Remove(category);
+
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> Update(CategoryUpdateRequest request)
+        {
+            var category = await _context.Categories.FindAsync( request.Id);
+            var categoryTranslation = await _context.CategoryTranslations.FirstOrDefaultAsync(x => x.CategoryId == request.Id);
+
+            if (category == null || categoryTranslation == null) throw new EShopException($"Cannot find a category with id: {request.Id}");
+
+
+            categoryTranslation.Name = request.Name;
+            categoryTranslation.SeoAlias = request.SeoAlias;
+            categoryTranslation.SeoDescription = request.SeoDescription;
+            categoryTranslation.SeoTitle = request.SeoTitle;
+
 
             return await _context.SaveChangesAsync();
         }

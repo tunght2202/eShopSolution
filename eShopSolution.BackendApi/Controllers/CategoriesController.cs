@@ -64,5 +64,20 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        [HttpPut("{categoryId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update([FromRoute] int categoryId, [FromForm] CategoryUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            request.Id = categoryId;
+            var affectedResult = await _categoryService.Update(request);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
     }
 }

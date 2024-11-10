@@ -13,5 +13,6 @@ namespace eShopSolution.AdminApp.Services
         Task<bool> CreateCategory(CategoryCreateRequest request);
         Task<CategoryPageVm> GetById(int id, string languageId);
         Task<bool> DeleteCategory(int id);
+        Task<bool> UpdateCategory(CategoryUpdateRequest request);
     }
 }

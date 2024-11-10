@@ -19,7 +19,7 @@ namespace eShopSolution.AdminApp.Controllers
             _configuration = configuration;
             _categoryApiClient = categoryApiClient;
         }
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 2)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 5)
         {
 
             var request = new GetManageCategoryPagingRequest()
@@ -97,6 +97,40 @@ namespace eShopSolution.AdminApp.Controllers
             }
 
             ModelState.AddModelError("", "Xóa không thành công");
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            var category = await _categoryApiClient.GetById(id, "vi");
+            var editVm = new CategoryUpdateRequest()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                SeoAlias = category.SeoAlias,
+                SeoDescription = category.SeoDescription,
+                SeoTitle = category.SeoTitle
+            };
+            return View(editVm);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit([FromForm] CategoryUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _categoryApiClient.UpdateCategory(request);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật danh mục thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Cập nhật danh mục thất bại");
             return View(request);
         }
 
