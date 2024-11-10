@@ -133,10 +133,16 @@ namespace eShopSolution.Application.Catelog.Products
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
 
-            if (request.CategoryId != null && request.CategoryId != 0)
+            if (request.CategoryId == -1)
+            {
+                query = query.Where(p => !_context.ProductInCategories.Any(pic => pic.ProductId == p.pt.ProductId));
+            }
+            else if (request.CategoryId != null && request.CategoryId != 0)
             {
                 query = query.Where(p => p.pic.CategoryId == request.CategoryId);
             }
+
+
 
             //3. Paging
             int totalRow = await query.CountAsync();
