@@ -67,5 +67,11 @@ namespace eShopSolution.AdminApp.Controllers
             return View(request);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(int id, string languageId = "vi")
+        {
+            var result = await _categoryApiClient.GetById(id, languageId);
+            return View(result);
+        }
     }
 }

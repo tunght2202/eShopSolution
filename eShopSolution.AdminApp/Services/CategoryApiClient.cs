@@ -30,20 +30,6 @@ namespace eShopSolution.AdminApp.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        //public async Task<ApiResult<bool>> CreateCategory(CategoryCreateRequest request)
-        //{
-        //    var client = _httpClientFactory.CreateClient();
-        //    client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-
-        //    var json = JsonConvert.SerializeObject(request);
-        //    var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-
-        //    var response = await client.PostAsync($"/api/Categories", httpContent);
-        //    var result = await response.Content.ReadAsStringAsync();
-        //    if (response.IsSuccessStatusCode)
-        //        return response.IsSuccessStatusCode;
-        //    return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
-        //}
 
         public async Task<bool> CreateCategory(CategoryCreateRequest request)
         {
@@ -85,6 +71,13 @@ namespace eShopSolution.AdminApp.Services
                 $"/api/Categories/paging?pageIndex={request.PageIndex}" +
                 $"&pageSize={request.PageSize}" +
                $"&keyword={request.Keyword}");
+
+            return data;
+        }
+
+        public async Task<CategoryPageVm> GetById(int id, string languageId)
+        {
+            var data = await GetAsync<CategoryPageVm>($"/api/Categories/{id}/{languageId}");
 
             return data;
         }

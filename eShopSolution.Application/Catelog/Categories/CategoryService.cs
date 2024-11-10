@@ -96,17 +96,19 @@ namespace eShopSolution.Application.Catelog.Categories
             return pagedResult;
         }
 
-        public async Task<CategoryVm> GetById(string languageId, int id)
+        public async Task<CategoryPageVm> GetById(string languageId, int id)
         {
             var query = from c in _context.Categories
                         join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
                         where ct.LanguageId == languageId && c.Id == id
                         select new { c, ct };
-            return await query.Select(x => new CategoryVm()
+            return await query.Select(x => new CategoryPageVm()
             {
                 Id = x.c.Id,
                 Name = x.ct.Name,
-                ParentId = x.c.ParentId
+                SeoAlias= x.ct.SeoAlias,
+                SeoDescription= x.ct.SeoDescription,
+                SeoTitle = x.ct.SeoTitle
             }).FirstOrDefaultAsync();
         }
 

@@ -9,7 +9,7 @@ namespace eShopSolution.Application.Catelog.Categories
     public interface ICategoryService
     {
         Task<List<CategoryVm>> GetAll(string languageId);
-        Task<CategoryVm> GetById(string languageId, int id);
+        Task<CategoryPageVm> GetById(string languageId, int id);
         Task<PagedResult<CategoryPageVm>> GetAllPaging(GetManageCategoryPagingRequest request);
         Task<int> Create(CategoryCreateRequest request);
 
